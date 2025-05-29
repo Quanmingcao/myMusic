@@ -18,6 +18,11 @@ namespace myMusic
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+        name: "Collections",
+        url: "Collections/{action}/{id}",
+        defaults: new { controller = "Collections", action = "Index", id = UrlParameter.Optional }
+    );
         }
     }
 }

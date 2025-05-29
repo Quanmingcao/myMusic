@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "UserCollections";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<myMusic.ViewModel.CollectionViewModel>
+
+@{
+    ViewBag.Title = "Thư viện của bạn";
+}
+
+<h2>Thư viện danh sách phát</h2>
+<div class="row">
+    @foreach (var col in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="@Url.Content("~/images/" + (string.IsNullOrEmpty(col.CoverImage) ? "plhld.jpg" : col.CoverImage))"
+                     alt="Ảnh bìa playlist"
+                     onerror="this.onerror=null;this.src='@Url.Content("~/images/plhld.jpg")';"
+                     class="card-img-top"
+                     style="height: 200px; object-fit: cover;" />
+
+                <div class="card-body">
+                    <h5 class="card-title">@col.Name</h5>
+                    <p class="card-text">
+                        Người tạo: @col.Username<br />
+                        Thể loại: @col.TypeName<br />
+                        Bài hát: @col.SongCount<br />
+                        Ngày tạo: @col.CreatedAt?.ToString("dd/MM/yyyy")
+                    </p>
+                    <a href="@Url.Action("Details", "Collections", new { id = col.CollectionID })" class="btn btn-primary">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

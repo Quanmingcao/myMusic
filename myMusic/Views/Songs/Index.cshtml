@@ -1,0 +1,83 @@
+﻿@model IEnumerable<myMusic.Models.Songs>
+
+@{
+    ViewBag.Title = "Danh sách bài hát";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    int totalPages = ViewBag.TotalPages;
+    int currentPage = ViewBag.CurrentPage;
+    var currentGenre = ViewBag.CurrentGenre;
+    var currentSort = ViewBag.CurrentSort;
+}
+
+<h2 class="mt-4">Danh sách bài hát</h2>
+
+<form method="get" class="row mb-4">
+    <div class="col-md-3">
+        <label>Thể loại:</label>
+        @Html.DropDownList("genreId", (SelectList)ViewBag.Genres, "Tất cả", new { @class = "form-select", onchange = "this.form.submit();" })
+    </div>
+    <div class="col-md-3">
+        <label>Sắp xếp theo:</label>
+        <select name="sort" class="form-select" onchange="this.form.submit();">
+            <option value="date" @(ViewBag.CurrentSort == "date" ? "selected" : "")>Mới nhất</option>
+            <option value="views" @(ViewBag.CurrentSort == "views" ? "selected" : "")>Lượt xem nhiều</option>
+        </select>
+    </div>
+</form>
+
+@if (!Model.Any())
+{
+    <p>Không có bài hát nào.</p>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var song in Model)
+        {
+            <div class="list-group-item">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <img src="@Url.Content("~/images/" + song.CoverImage)" alt="Ảnh bìa"
+                             onerror="this.onerror=null;this.src='@Url.Content("~/images/ImagesSong/plhld.jpg")';"
+                             class="img-fluid rounded"
+                             style="height: 100px; object-fit: cover;" />
+                    </div>
+                    <div class="col-md-10">
+                        <h5>
+                            <a href="@Url.Action("Details", "Songs", new { id = song.SongID })" class="text-decoration-none">
+                                @song.Title
+                            </a>
+                        </h5>
+                        <p class="card-text">
+                            👤 @song.Accounts.Username<br />
+                            🎼 @song.Genres.GenreName<br />
+                            👁️ @song.Views lượt xem
+                            <i class="bi bi-0-circle-fill"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+<nav class="text-center mt-4">
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new {
+                    page = i,
+                    genreId = ViewBag.CurrentGenre,
+                    sort = ViewBag.CurrentSort
+                })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+
+
+}
+

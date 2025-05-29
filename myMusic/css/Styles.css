@@ -1,0 +1,49 @@
+﻿body {
+}
+umerable<myMusic.Models.Songs >
+@ {
+    ViewBag .Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    // Đảm bảo layout này tồn tại
+}
+
+<h2 class="text-center mt-4 mb-4" > Bài hát mới nhất</h2 >
+.songs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.song-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.cover-image {
+    width: 100%;
+    height: auto;
+}
+
+.play-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    .play-button:hover {
+        background-color: #0056b3;
+    }
+
+<h2 > Featured Songs</h2 >
+<div class="songs-list" >
+@foreach (var song in Model) {
+    <div class="song-item"> <img src="@song.CoverImage" alt="@song.Title" class="cover-image" /> <h3>@song.Title</h3> <p>Genre: @song.Genres?.Name</p> <p>Duration: @song.Duration mins</p> <p>Views: @song.Views</p> <a href="@song.FilePath" class="play-button">Play</a> </div>
+}
+
+</div >

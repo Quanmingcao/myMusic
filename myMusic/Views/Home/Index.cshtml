@@ -1,0 +1,52 @@
+﻿@model List<myMusic.ViewModel.SongViewModel>
+
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+}
+<div class="card mb-4">
+    <div class="card-header">
+        <strong>🔥 Top bài hát nhiều lượt xem <i class="bi bi-0-circle-fill"></i></strong>
+    </div>
+    <div class="card-body">
+        @Html.Action("TopSongs", "Home")
+    </div>
+</div>
+<h2>Danh sách bài hát mới</h2>
+
+@foreach (var song in Model)
+{
+    <div class="border p-3 mb-3">
+        <h4>
+            <a href="@Url.Action("Details", "Home", new { id = song.SongID })" style="text-decoration:none; color:inherit;">
+                @song.Title
+            </a>
+          
+        </h4>
+        <a href="@Url.Action("Details", "Songs", new { id = song.SongID })">
+            <img src="@Url.Content("~/images/" + song.CoverImage)"
+                 alt="Ảnh bìa bài hát"
+                 onerror="this.onerror=null;this.src='@Url.Content("~/images/ImagesSong/plhld.jpg")';"
+                 style="width: 150px; height: 150px; object-fit: cover;" />
+        </a>
+
+        <p>Người đăng: @song.Username</p>
+        <p>Lượt xem: @song.Views</p>
+    </div>
+
+}
+
+<!-- Phân trang -->
+<nav class="text-center mt-4">
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == currentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

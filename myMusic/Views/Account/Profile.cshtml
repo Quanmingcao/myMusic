@@ -1,0 +1,15 @@
+﻿@model myMusic.ViewModel.UserProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; // hoặc bỏ nếu không dùng layout
+    ViewBag.Title = "Trang cá nhân";
+}
+
+<h2>Trang cá nhân: @Model.Username</h2>
+<p><strong>Tổng lượt xem:</strong> @Model.TotalViews</p>
+
+<hr />
+<hr />
+<h3>Bài hát đã đăng</h3>
+
+@Html.Action("SongsByUser", "Songs", new { userId = Model.UserID })

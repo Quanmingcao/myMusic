@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+@model myMusic.ViewModel.CollectionDetailsViewModel
+
+
+<p>
+    👤 Người tạo: <strong>@Model.Username</strong><br />
+    📁 Loại: <strong>@Model.TypeName</strong><br />
+    🗓️ Ngày tạo: <strong>@(Model.CreatedAt?.ToString("dd/MM/yyyy") ?? "Không rõ")</strong><br />
+    📄 Mô tả: @Model.Description
+</p>
+
+<hr />
+
+<h4>🎵 Danh sách bài hát:</h4>
+
+<div class="list-group">
+    @foreach (var song in Model.Songs)
+    {
+        <div class="list-group-item">
+            <div class="row align-items-center">
+                <div class="col-md-2">
+                    <img src="@Url.Content("~/images/" + song.CoverImage)" alt="Ảnh bìa"
+                         onerror="this.onerror=null;this.src='@Url.Content("~/images/ImagesSong/plhld.jpg")';"
+                         class="img-fluid rounded"
+                         style="height: 100px; object-fit: cover;" />
+                </div>
+                <div class="col-md-8">
+                    <a href="@Url.Action("Details", "Songs", new { id = song.SongID })" class="fw-bold">
+                        @song.Title
+                    </a>
+                    <p class="mb-0 text-muted">
+                        👁️ @song.Views lượt xem
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

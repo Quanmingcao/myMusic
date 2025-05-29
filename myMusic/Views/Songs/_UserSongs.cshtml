@@ -1,0 +1,39 @@
+﻿@model IEnumerable<myMusic.Models.Songs>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Không có bài hát nào.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var song in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="@Url.Content("~/images/" + song.CoverImage)"
+                         onerror="this.onerror=null;this.src='@Url.Content("~/images/plhld.jpg")';"
+                         class="card-img-top"
+                         style="height: 200px; object-fit: cover;" />
+
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate">@song.Title</h5>
+                        <p class="card-text text-muted">
+                            @song.Genres.GenreName <br />
+                            Lượt xem: @song.Views
+                        </p>
+
+
+
+                        <a href="@Url.Action("Details", "Songs", new { id = song.SongID })" class="btn btn-outline-primary btn-sm">
+                            Nghe ngay
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+}
+
+

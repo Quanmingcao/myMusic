@@ -1,0 +1,43 @@
+﻿@model myMusic.Models.Songs
+
+@{
+    ViewBag.Title = "Chi tiết bài hát";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center mt-5">
+    <h2>@Model.Title</h2>
+
+    <img src="@Url.Content("~/images/" + Model.CoverImage)"
+         alt="Ảnh bìa"
+         onerror="this.onerror=null;this.src='@Url.Content("~/images/ImagesSong/plhld.jpg")';"
+         style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%;" />
+
+    <div class="mt-4">
+        <audio id="audioPlayer" controls style="width: 100%; max-width: 500px;">
+            <source src="@Url.Content("~/audio/" + Model.FilePath)" type="audio/mpeg" />
+            Trình duyệt của bạn không hỗ trợ audio.
+        </audio>
+    </div>
+
+    <div class="mt-3">
+        <button class="btn btn-outline-primary me-2" onclick="replayAudio()">🔁 Replay</button>
+        <button class="btn btn-outline-secondary" onclick="toggleLoop(this)">🔂 Loop: Off</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const audio = document.getElementById('audioPlayer');
+
+        function replayAudio() {
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        function toggleLoop(button) {
+            audio.loop = !audio.loop;
+            button.textContent = audio.loop ? "🔂 Loop: On" : "🔂 Loop: Off";
+        }
+    </script>
+}
